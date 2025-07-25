@@ -6,7 +6,8 @@ spec:
   capacity:
     storage: 1Gi
   accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: "/mnt/data/n8n"  # adjust path to a writable location on your Pi
-
+    - ReadWriteMany
+  nfs:
+    path: /mnt/storage/n8n
+    server: 10.0.0.60
+  persistentVolumeReclaimPolicy: Retain

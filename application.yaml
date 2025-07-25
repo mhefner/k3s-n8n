@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://your-git-repo-url.git
+    repoURL: https://github.com/mhefner/k3s-n8n.git
     targetRevision: HEAD
     path: n8n
   destination:
