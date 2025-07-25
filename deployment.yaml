@@ -25,6 +25,8 @@ spec:
         - name: N8N_BASIC_AUTH_ACTIVE
           value: "true"
         - name: N8N_BASIC_AUTH_USER
+	- name: N8N_SECURE_COOKIE
+  	  value: "false"
           valueFrom:
             secretKeyRef:
               name: n8n-auth
