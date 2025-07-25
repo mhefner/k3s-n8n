@@ -205,7 +205,7 @@ Ensure you're using the ARM-specific image:
 
 ## License
 
-[License information]
+MIT
 
 ## Support
 
