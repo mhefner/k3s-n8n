@@ -8,4 +8,7 @@ spec:
   resources:
     requests:
       storage: 1Gi
+  volumeName: pvc-ee488ef9-bfe8-4ce4-b9ca-1d637bee0127   # <-- keep it
+  storageClassName: local-path                            # <-- keep it
+  volumeMode: Filesystem
 
