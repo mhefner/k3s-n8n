@@ -14,14 +14,17 @@ spec:
       labels:
         app: n8n
     spec:
-      # FIX 1: Prevent K8s from overwriting N8N_PORT with service info
-      enableServiceLinks: false 
+      enableServiceLinks: false
       
-      # FIX 2: Ensure the volume is writable by the 'node' user (UID 1000)
-      securityContext:
-        fsGroup: 1000
-        runAsUser: 1000
-        runAsGroup: 1000
+      # FIX: This runs before n8n starts to force permission changes
+      initContainers:
+      - name: volume-permissions
+        image: busybox:latest
+        # Change owner of the mounted volume to node (1000)
+        command: ["sh", "-c", "chown -R 1000:1000 /home/node/.n8n"]
+        volumeMounts:
+        - name: n8n-data
+          mountPath: /home/node/.n8n
       
       containers:
       - name: n8n
