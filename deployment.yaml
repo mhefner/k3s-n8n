@@ -14,6 +14,15 @@ spec:
       labels:
         app: n8n
     spec:
+      # FIX 1: Prevent K8s from overwriting N8N_PORT with service info
+      enableServiceLinks: false 
+      
+      # FIX 2: Ensure the volume is writable by the 'node' user (UID 1000)
+      securityContext:
+        fsGroup: 1000
+        runAsUser: 1000
+        runAsGroup: 1000
+      
       containers:
       - name: n8n
         image: n8nio/n8n:latest
@@ -43,4 +52,3 @@ spec:
       - name: n8n-data
         persistentVolumeClaim:
           claimName: n8n-pvc
-
