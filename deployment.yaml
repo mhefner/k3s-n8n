@@ -14,6 +14,18 @@ spec:
       labels:
         app: n8n
     spec:
+      enableServiceLinks: false
+      
+      # FIX: This runs before n8n starts to force permission changes
+      initContainers:
+      - name: volume-permissions
+        image: busybox:latest
+        # Change owner of the mounted volume to node (1000)
+        command: ["sh", "-c", "chown -R 1000:1000 /home/node/.n8n"]
+        volumeMounts:
+        - name: n8n-data
+          mountPath: /home/node/.n8n
+      
       containers:
       - name: n8n
         image: n8nio/n8n:latest
