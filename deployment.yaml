@@ -1,4 +1,14 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: n8n
+  labels:
+    app: n8n
 spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: n8n
   template:
     metadata:
       labels:
@@ -9,7 +19,6 @@ spec:
         runAsUser: 1000
         runAsGroup: 1000
         fsGroup: 1000
-
       containers:
       - name: n8n
         image: n8nio/n8n:latest
@@ -35,7 +44,6 @@ spec:
         volumeMounts:
         - name: n8n-data
           mountPath: /home/node/.n8n
-
       volumes:
       - name: n8n-data
         persistentVolumeClaim:
