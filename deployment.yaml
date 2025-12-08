@@ -1,31 +1,15 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: n8n
-  labels:
-    app: n8n
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: n8n
   template:
     metadata:
       labels:
         app: n8n
     spec:
       enableServiceLinks: false
-      
-      # FIX: This runs before n8n starts to force permission changes
-      initContainers:
-      - name: volume-permissions
-        image: busybox:latest
-        # Change owner of the mounted volume to node (1000)
-        command: ["sh", "-c", "chown -R 1000:1000 /home/node/.n8n"]
-        volumeMounts:
-        - name: n8n-data
-          mountPath: /home/node/.n8n
-      
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+
       containers:
       - name: n8n
         image: n8nio/n8n:latest
@@ -51,6 +35,7 @@ spec:
         volumeMounts:
         - name: n8n-data
           mountPath: /home/node/.n8n
+
       volumes:
       - name: n8n-data
         persistentVolumeClaim:
