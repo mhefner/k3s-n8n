@@ -4,11 +4,10 @@ metadata:
   name: n8n-pvc
 spec:
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   resources:
     requests:
       storage: 1Gi
-  volumeName: n8n-pv                                      # <-- keep it
-  storageClassName: ""                                    # <-- keep it
+  storageClassName: local-path
   #volumeMode: Filesystem
 
